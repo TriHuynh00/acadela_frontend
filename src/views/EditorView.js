@@ -12,9 +12,14 @@ class EditorView extends React.Component {
                 '//type your code',
                 'error',
                 'case'
-            ].join('\n')
-
+            ].join('\n'),
+            codeContent: ''
         }
+    }
+
+    submitCode = () => {
+        const codeVal = this.editor.getValue();
+        console.log("code is", codeVal);
     }
 
     editorWillMount(monaco) {
@@ -34,14 +39,14 @@ class EditorView extends React.Component {
         console.log("Acadela Name " + name);
     }
 
-    editorDidMount(editor, monaco) {
+    editorDidMount = (editor) => {
         console.log('editorDidMount', editor);
-
+        this.editor = editor;
         editor.focus();
     }
 
 
-    onChange(newValue, e) {
+    onChange = (newValue, e) => {
         console.log('onChange', newValue, e);
     }
 
@@ -51,19 +56,24 @@ class EditorView extends React.Component {
             selectOnLineNumbers: true
         };
         return (
+            <div>
+                <MonacoEditor
+                    id="AcadelaEditor"
+                    width="800"
+                    height="600"
+                    language={Acadela.getName()}
+                    theme={Acadela.getThemeName()}
+                    value={code}
+                    options={options}
+                    onChange={this.onChange}
+                    editorWillMount={this.editorWillMount}
+                    editorDidMount={this.editorDidMount}
+                />
 
-            <MonacoEditor
-                id="AcadelaEditor"
-                width="800"
-                height="600"
-                language={Acadela.getName()}
-                theme={Acadela.getThemeName()}
-                value={code}
-                options={options}
-                onChange={this.onChange}
-                editorWillMount={this.editorWillMount}
-                editorDidMount={this.editorDidMount}
-            />
+                <button onClick={this.submitCode}>
+                    Submit
+                </button>
+            </div>
         );
     }
 }

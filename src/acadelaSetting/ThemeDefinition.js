@@ -7,7 +7,7 @@ export default class ThemeDefinition {
             { token: 'obj-keywords', foreground: '660066', fontStyle: 'bold' },
             { token: 'atr-keywords', foreground: '1167b1', fontStyle: 'bold' },
             { token: 'error', foreground: 'b4151c' },
-            { token: 'str', foreground: '4ca973' }
+            { token: 'str', foreground: '4ca973', fontStyle: 'bold' }
         ]
     };
 }
