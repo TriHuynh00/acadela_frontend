@@ -9,8 +9,9 @@ class EditorView extends React.Component {
         super(props);
         this.state = {
             code: [
-                '[notice] Apache/1.3.29 (Unix) configured -- resuming normal operations',
-                '[info] Server built: Feb 27 2004 13:56:37',
+                '//type your code',
+                'error',
+                'case'
             ].join('\n')
 
         }
@@ -26,47 +27,7 @@ class EditorView extends React.Component {
         monaco.languages.setMonarchTokensProvider(name, Acadela.languageDef);
 
         // Register a completion item provider for the new language
-        monaco.languages.registerCompletionItemProvider(name,{
-            provideCompletionItems: function(model, position, context, token) {
-                var word = model.getWordUntilPosition(position);
-                var range = {
-                    startLineNumber: position.lineNumber,
-                    endLineNumber: position.lineNumber,
-                    startColumn: word.startColumn,
-                    endColumn: word.endColumn
-                };
-                return {
-                    suggestions: [{
-                        label: 'simpleText',
-                        kind: monaco.languages.CompletionItemKind.Text,
-                        insertText: 'simpleText',
-                        range: range
-                    },
-                    {
-                        label: 'testing',
-                        kind: monaco.languages.CompletionItemKind.Keyword,
-                        insertText: 'testing(${1:condition})',
-                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-                        range: range
-                    },
-                    {
-                        label: 'ifelse',
-                        kind: monaco.languages.CompletionItemKind.Snippet,
-                        insertText: [
-                            'if (${1:condition}) {',
-                            '\t$0',
-                            '} else {',
-                            '\t',
-                            '}'
-                        ].join('\n'),
-                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-                        documentation: 'If-Else Statement',
-                        range: range
-                    }]
-                };
-                // return {suggestions: suggestions};
-            }
-        });
+        monaco.languages.registerCompletionItemProvider(name, Acadela.getAutoCompleteProvider(monaco));
 
         // Define a new theme that contains only rules that match this language
         monaco.editor.defineTheme(theme, Acadela.themeDef);

@@ -4,10 +4,10 @@ export default class ThemeDefinition {
         base: 'vs',
         inherit: false,
         rules: [
-            { token: 'custom-info', foreground: '808080' },
-            { token: 'custom-error', foreground: 'ff0000', fontStyle: 'bold' },
-            { token: 'custom-notice', foreground: 'FFA500' },
-            { token: 'custom-date', foreground: '008800' },
+            { token: 'obj-keywords', foreground: '660066', fontStyle: 'bold' },
+            { token: 'atr-keywords', foreground: '1167b1', fontStyle: 'bold' },
+            { token: 'error', foreground: 'b4151c' },
+            { token: 'str', foreground: '4ca973' }
         ]
     };
 }
