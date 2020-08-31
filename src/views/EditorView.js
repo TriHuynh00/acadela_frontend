@@ -11,7 +11,8 @@ class EditorView extends React.Component {
             code: [
                 '//type your code',
                 'error',
-                'case'
+                'case',
+                'multiplicity'
             ].join('\n'),
             codeContent: ''
         }

@@ -1,13 +1,13 @@
-
+import NonTerminalSymbol from "./NonTerminalSymbol";
 export default class ThemeDefinition {
     static themeDef = {
         base: 'vs',
         inherit: false,
         rules: [
-            { token: 'obj-keywords', foreground: '660066', fontStyle: 'bold' },
-            { token: 'atr-keywords', foreground: '1167b1', fontStyle: 'bold' },
-            { token: 'error', foreground: 'b4151c' },
-            { token: 'str', foreground: '4ca973', fontStyle: 'bold' }
+            { token: NonTerminalSymbol.OBJECT, foreground: '660066' /*purple*/, fontStyle: 'bold' },
+            { token: NonTerminalSymbol.ATTRIBUTE, foreground: '1167b1' /*dark blue*/, fontStyle: 'bold' },
+            { token: NonTerminalSymbol.ERROR, foreground: 'b4151c' /*red*/ },
+            { token: NonTerminalSymbol.STRING, foreground: '4ca973' /*green*/, fontStyle: 'bold' }
         ]
     };
 }

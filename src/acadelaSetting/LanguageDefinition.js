@@ -1,13 +1,24 @@
+import NonTerminalSymbol from "./NonTerminalSymbol";
 
 export default class LanguageDefinition {
-     static languageDef = {
-         tokenizer: {
-             root: [
-                 [/error/, "error"],
-                 [/case/, "obj-keywords"],
-                 [/multiplicity|description/, "atr-keywords"],
-                 [/['].*[']/, "str"]
-             ]
-         }
-     };
+    static attrRegExp = new RegExp([
+        'multiplicity',
+        '|description'
+    ].join(''));
+
+    static objRegExp = new RegExp([
+        'case',
+        '|entity'
+    ].join(''));
+
+    static languageDef = {
+        tokenizer: {
+            root: [
+                [this.objRegExp, NonTerminalSymbol.OBJECT],
+                [this.attrRegExp, NonTerminalSymbol.ATTRIBUTE],
+                [/error/, NonTerminalSymbol.ERROR],
+                [/['].*[']/, NonTerminalSymbol.STRING]
+            ]
+        }
+    };
 }
