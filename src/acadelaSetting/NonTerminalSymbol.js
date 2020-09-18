@@ -4,4 +4,6 @@ export default class NonTerminalSymbol {
     static ATTRIBUTE = 'attr-keywords';
     static ERROR = 'error';
     static STRING = 'str';
+    static COMMENT = 'comment';
+    static DEFAULT = 'default';
 }

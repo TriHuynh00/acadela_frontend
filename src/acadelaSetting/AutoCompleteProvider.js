@@ -1,3 +1,4 @@
+// import MonacoEditor from "react-monaco-editor";
 
 export default class AutoCompleteProvider {
     static defineAutoComplete(monaco) {
@@ -17,27 +18,31 @@ export default class AutoCompleteProvider {
                         insertText: 'simpleText',
                         range: range
                     },
-                        {
-                            label: 'testing',
-                            kind: monaco.languages.CompletionItemKind.Keyword,
-                            insertText: 'testing(${1:condition})',
-                            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-                            range: range
-                        },
-                        {
-                            label: 'ifelse',
-                            kind: monaco.languages.CompletionItemKind.Snippet,
-                            insertText: [
-                                'if (${1:condition}) {',
-                                '\t$0',
-                                '} else {',
-                                '\t',
-                                '}'
-                            ].join('\n'),
-                            insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-                            documentation: 'If-Else Statement',
-                            range: range
-                        }]
+                    {
+                        label: 'EntityTemplate',
+                        kind: monaco.languages.CompletionItemKind.Snippet,
+                        insertText: [
+                            'entity $1',
+                            "\tdescription = '$2'",
+                            "\tmultiplicity = '$3'"
+                        ].join('\n'),
+                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                        range: range
+                    },
+                    {
+                        label: 'ifelse',
+                        kind: monaco.languages.CompletionItemKind.Snippet,
+                        insertText: [
+                            'if (${1:condition}) {',
+                            '\t$0',
+                            '} else {',
+                            '\t',
+                            '}'
+                        ].join('\n'),
+                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                        documentation: 'If-Else Statement',
+                        range: range
+                    }]
                 };
                 // return {suggestions: suggestions};
             }
