@@ -8,25 +8,7 @@ class Editor extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            code: [
-                'workspace staticId = \'c023\' id = \'Lleida_Cancer\'' ,
-                '    define case COPD_Plan\n' ,
-                '        group staticId = \'g01\' id = \'doctorGroup\'' ,
-                '        group staticId = \'g02\' id = \'nurseGroup\'' ,
-                '        group staticId = \'g03\' id = \'patientGroup\'' ,
-                '        user staticId = \'u01\' id = \'Jane\'' ,
-                '        user staticId = \'u02\' id = \'Kim\'\n' ,
-                '        attributelist' ,
-                '            entity Settings' ,
-                '                description = \'Settings desc\'' ,
-                '                multiplicity = \'exactlyOne\'' ,
-                '                type = \'Link.Type.Settings\'' ,
-                '            entity Identifications' ,
-                '                description = \'Identitfication desc\'' ,
-                '                multiplicity = \'many\'' ,
-                '        CaseDefinition Leida'
-            ].join('\n'),
-            codeContent: ''
+            code:''
         }
     }
 
