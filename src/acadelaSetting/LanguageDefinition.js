@@ -10,8 +10,7 @@ export default class LanguageDefinition {
             'attributelist',
             'casedefinition',
             'field',
-
-            'imports',
+            'import',
             'setting',
             'trigger',
             'summarypanel',
@@ -32,7 +31,9 @@ export default class LanguageDefinition {
         ],
         attrKeyWords:
             [
-                'multiplicity', 'description', 'type',
+                'multiplicity',
+                'description',
+                'type',
                 'id', 'staticId',
                 'prefix',
                 'version',
@@ -43,8 +44,7 @@ export default class LanguageDefinition {
                 'previousStep',
                 'expression',
                 'uiRef',
-                'CustomFieldValue'
-
+                'customFieldValue'
             ],
         stateKeyWords:
             [
@@ -67,10 +67,13 @@ export default class LanguageDefinition {
             ],
         tokenizer: {
             root: [
-
                 // [this.attrRegExp, NonTerminalSymbol.ATTRIBUTE],
                 [/error/, NonTerminalSymbol.ERROR],
-                [/['].*[']/, NonTerminalSymbol.STRING],
+                // [/['].*[']/, NonTerminalSymbol.STRING],
+                // [/["].*["]/, NonTerminalSymbol.STRING],
+                [/"/,  { token: NonTerminalSymbol.STRING, bracket: '@open', next: '@stringDoubleQuote' } ],
+                [/'/,  { token: NonTerminalSymbol.STRING, bracket: '@open', next: '@stringSingleQuote' } ],
+
                 [/[a-z_$][\w$]*/, {
                     cases: {
                         '@objectKeyWords': NonTerminalSymbol.OBJECT,
@@ -87,7 +90,16 @@ export default class LanguageDefinition {
                 ["\\*/", NonTerminalSymbol.COMMENT, '@pop'],
                 [/[\/*]/, NonTerminalSymbol.COMMENT]
             ],
-
+            stringDoubleQuote: [
+                [/[^\\"]+/,  NonTerminalSymbol.STRING],
+                [/\\./,      'string.escape.invalid'],
+                [/"/,        { token: NonTerminalSymbol.STRING, bracket: '@close', next: '@pop' } ]
+            ],
+            stringSingleQuote: [
+                [/[^\\']+/,  NonTerminalSymbol.STRING],
+                [/\\./,      'string.escape.invalid'],
+                [/'/,        { token: NonTerminalSymbol.STRING, bracket: '@close', next: '@pop' } ]
+            ],
             whitespace: [
                 [/[ \t\r\n]+/, 'white'],
                 [/\/\*/, NonTerminalSymbol.COMMENT, '@comment'],

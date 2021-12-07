@@ -1,6 +1,37 @@
 // import MonacoEditor from "react-monaco-editor";
 
+import LanguageDefinition from "./LanguageDefinition";
+
 export default class AutoCompleteProvider {
+
+    static constructKeywordAutoCompleteSuggestions = (monaco) => {
+        let keyWordlist = [];
+
+        let languageKeyWords = [
+            LanguageDefinition.languageDef.objectKeyWords,
+            LanguageDefinition.languageDef.attrKeyWords,
+            LanguageDefinition.languageDef.stateKeyWords
+        ];
+
+        // push the keywords in each keyword type into the list
+        // of keywords for autocompletion
+        languageKeyWords.forEach(keywordType => {
+            keywordType.forEach(keyword => {
+                keyWordlist.push(
+                    {
+                        label: keyword,
+                        kind: monaco.languages.CompletionItemKind.Text,
+                        insertText: keyword,
+                    }
+                )
+            })
+        });
+
+
+        return keyWordlist
+
+    };
+
     static defineAutoComplete(monaco) {
         return {
             /* provideCompletionItems: function (model, position) {
@@ -66,14 +97,14 @@ export default class AutoCompleteProvider {
                         documentation: 'If-Else Statement',
                     },
                     {
-                        label: 'Stage',
+                        label: 'Stage (Basic)',
                         kind: monaco.languages.CompletionItemKind.Snippet,
                         insertText: ['Stage STAGENAME', '\t#mandatory #noRepeat', '\towner = \'Setting.CaseOwner\'', '\tlabel = \'STAGE LABEL\'', '\t', '\tPrecondition', '\t\tpreviousStep = \'PREVIOUSSTAGE\'', '\t', '\t'].join('\n'),
                         insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
                         documentation: 'If-Else Statement',
                     },
                     {
-                        label: 'HumanTask',
+                        label: 'HumanTask (Basic)',
                         kind: monaco.languages.CompletionItemKind.Snippet,
                         insertText: ['HumanTask TASKNAME', '\t#mandatory', '\towner = \'Setting.CaseOwner\'', '\tlabel = \'TASK LABEL\'', '\tdueDateRef = \'Setting.DATENAME\'', '\texternalId = \'TASKNAME\'', '\t', '\t'].join('\n'),
                         insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
@@ -113,10 +144,12 @@ export default class AutoCompleteProvider {
                         insertText: ['Field FIELDNAME', '\t#left', '\tlabel = \'FIELD LABEL\'', '\texpression = \'if(FIELDREFERENCE1 < 80 and FIELDREFERENCE2 < 120) then "Normal" else if(FIELDREFERENCE1 < 80 and FIELDREFERENCE2 < 130) then "Elevated" else "High"\'', '\t', ''].join('\n'),
                         insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
                         documentation: 'If-Else Statement',
-                    }
-                ];
-                return { suggestions: suggestions };
+                    },
 
+                ].concat(
+                    this.constructKeywordAutoCompleteSuggestions(monaco)
+                );
+                return { suggestions: suggestions };
             }
         };
     };
