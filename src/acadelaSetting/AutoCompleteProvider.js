@@ -90,6 +90,42 @@ export default class AutoCompleteProvider {
                     //     insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
                     // },
                     {
+                        label: 'Group (Basic)',
+                        kind: monaco.languages.CompletionItemKind.Snippet,
+                        insertText: [
+                            'group GROUPID name = \'Group Name\''
+                        ].join('\n'),
+                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                        documentation: 'Basic Group Definition',
+                    },
+                    {
+                        label: 'Group (Full)',
+                        kind: monaco.languages.CompletionItemKind.Snippet,
+                        insertText: [
+                            'group GROUPID name = \'Group Name\' staticId = \'group_ID_in_SACM\''
+                        ].join('\n'),
+                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                        documentation: 'Full Group Definition',
+                    },
+                    {
+                        label: 'User (Basic)',
+                        kind: monaco.languages.CompletionItemKind.Snippet,
+                        insertText: [
+                            'user userId'
+                        ].join('\n'),
+                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                        documentation: 'Basic User Definition',
+                    },
+                    {
+                        label: 'User (Full)',
+                        kind: monaco.languages.CompletionItemKind.Snippet,
+                        insertText: [
+                            'user userID staticId = \'user_ID_in_SACM\''
+                        ].join('\n'),
+                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                        documentation: 'Full User Definition',
+                    },
+                    {
                         label: 'Setting (Full)',
                         kind: monaco.languages.CompletionItemKind.Snippet,
                         insertText: [
