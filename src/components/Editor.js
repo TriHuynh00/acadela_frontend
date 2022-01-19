@@ -296,6 +296,7 @@ class Editor extends React.Component {
       '                    label = "Post-Treatment Recommendation:"',
       error: false,
       success: false,
+      successMessage: "Successfully Compiled",
       errorMessage: "",
     };
   }
@@ -309,7 +310,7 @@ class Editor extends React.Component {
     const result = await CompileService.compileCode(request);
     console.log("the result", result);
     if (result.status === 201) {
-      this.setState({ success: true, error: false, code: codeVal });
+      this.setState({ success: true, error: false, code: codeVal, successMessage: "Successfully load the case into SACM!"});
     } else if (result.status === 213) {
       let errorArr = result?.data?.traceback.toString().split("Exception:");
       let errorString = "Internal Error";
@@ -418,7 +419,7 @@ class Editor extends React.Component {
               }}
               rows="3"
               readOnly
-              value={"Successfully compiled!"}
+              value={this.state.successMessage}
             ></textarea>
           )}
         </div>
