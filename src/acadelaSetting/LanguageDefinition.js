@@ -23,7 +23,7 @@ export default class LanguageDefinition {
             'DualTask',
             'Form',
             'InputField',
-            'dynamicfield',
+            'use',
             'OutputField',
             'define',
             'InfoPath',
@@ -144,7 +144,7 @@ export default class LanguageDefinition {
                 [/"/,  { token: NonTerminalSymbol.STRING, bracket: '@open', next: '@stringDoubleQuote' } ],
                 [/'/,  { token: NonTerminalSymbol.STRING, bracket: '@open', next: '@stringSingleQuote' } ],
 
-                [/\#[\w.\(\)]*/,  { token: NonTerminalSymbol.DIRECTIVE} ],
+                [/\#[\w\.]*[\(\w-\)]*/,  { token: NonTerminalSymbol.DIRECTIVE} ],
 
                 [/[a-z_$][\w$]*/, {
                     cases: {

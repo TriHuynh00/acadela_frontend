@@ -431,6 +431,15 @@ export default class AutoCompleteProvider {
                         insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
                         documentation: 'If-Else Statement',
                     },
+                    {
+                        label: 'number (min-max)',
+                        kind: monaco.languages.CompletionItemKind.Snippet,
+                        insertText: [
+                            'number(${1:min}-${2:max})'
+                        ].join('\n'),
+                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                        documentation: 'Number (min-max) Definition',
+                    },
 
                 ].concat(
                     this.constructKeywordAutoCompleteSuggestions(monaco)
