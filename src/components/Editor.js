@@ -7,6 +7,7 @@ import {treatmentPlanTemplate} from "./TreatmentPlanTemplate"
 class Editor extends React.Component {
   constructor(props) {
     super(props);
+    
     this.state = {
       code:
       treatmentPlanTemplate,
