@@ -18,6 +18,7 @@ export default class LanguageDefinition {
             'Trigger',
             'SummaryPanel',
             'Stage',
+            'Task',
             'HumanTask',
             'AutomatedTask',
             'DualTask',

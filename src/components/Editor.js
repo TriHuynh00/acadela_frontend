@@ -29,6 +29,7 @@ class Editor extends React.Component {
       success: false,
       error: false,
       loading: true,
+      code: codeVal
     });
     //console.log("code is", codeVal);
     const result = await CompileService.compileCode(request);

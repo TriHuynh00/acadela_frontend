@@ -90,6 +90,15 @@ export default class AutoCompleteProvider {
                     //     insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
                     // },
                     {
+                        label: 'Import (with alias)',
+                        kind: monaco.languages.CompletionItemKind.Snippet,
+                        insertText: [
+                            'import Path.to.file as ALIAS'
+                        ].join('\n'),
+                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                        documentation: 'Import file with alias',
+                    },
+                    {
                         label: 'Group (Basic)',
                         kind: monaco.languages.CompletionItemKind.Snippet,
                         insertText: [
@@ -228,11 +237,34 @@ export default class AutoCompleteProvider {
                         documentation: 'Full Human Task Definition',
                     },
                     {
+                        label: 'Trigger for Case (Sends a HTTP Request)',
+                        kind: monaco.languages.CompletionItemKind.Snippet,
+                        insertText: [
+                            'Trigger',
+                            'On CaseState',
+                            '\tinvoke \'EXTERNAL_SYSTEM_URL\'',
+                        ].join('\n'),
+                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                        documentation: 'Case Hook Definition',
+                    },
+                    {
+                        label: 'Trigger for Task/Stage (Sends a HTTP Request)',
+                        kind: monaco.languages.CompletionItemKind.Snippet,
+                        insertText: [
+                            'Trigger',
+                            'On TaskOrStageState',
+                            '\tinvoke \'EXTERNAL_SYSTEM_URL\'',
+                            '\tmethod HTTP_METHOD',
+                            '\twith failureMessage \'ERROR_MESSAGE\'',
+                        ].join('\n'),
+                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                        documentation: 'Task/Stage Hook Definition',
+                    },
+                    {
                         label: 'Hook for Case (Sends a HTTP Request)',
                         kind: monaco.languages.CompletionItemKind.Snippet,
                         insertText: [
-                            '\/\/Hook HOOKNAME',
-                            'On #STATE',
+                            'On CaseState',
                             '\tinvoke \'EXTERNAL_SYSTEM_URL\'',
                         ].join('\n'),
                         insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
@@ -243,7 +275,7 @@ export default class AutoCompleteProvider {
                         kind: monaco.languages.CompletionItemKind.Snippet,
                         insertText: [
                             '\/\/Hook HOOKNAME',
-                            'On #STATE',
+                            'On TaskOrStageState',
                             '\tinvoke \'EXTERNAL_SYSTEM_URL\'',
                             '\tmethod HTTP_METHOD',
                             '\twith failureMessage \'ERROR_MESSAGE\'',
@@ -385,6 +417,20 @@ export default class AutoCompleteProvider {
                         documentation: 'Conditional Output Field Definition',
                     },
                     {
+                        label: 'OutputField (Customize Output Data Location)',
+                        kind: monaco.languages.CompletionItemKind.Snippet,
+                        insertText: ['OutputField FIELDNAME',
+                            '\t#left',
+                            '\t#custom',
+                            '\tlabel = \'FIELD LABEL\'',
+                            '\t\/\/CustomFieldValue = \'PATH_TO_A_CUSTOM_GLOBAL_ELEMENT\'',
+                            '\texpression = \'DISPLAY_OUTPUT_EXPRESSION\'',
+                            '\t', ''
+                        ].join('\n'),
+                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                        documentation: 'Output Field to Custom Element Definition',
+                    },
+                    {
                         label: 'OutputField (Full)',
                         kind: monaco.languages.CompletionItemKind.Snippet,
                         insertText: ['OutputField FIELDNAME',
@@ -403,6 +449,15 @@ export default class AutoCompleteProvider {
                         ].join('\n'),
                         insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
                         documentation: 'Complete OutputField Definition',
+                    },
+                    {
+                        label: 'number (min-max)',
+                        kind: monaco.languages.CompletionItemKind.Snippet,
+                        insertText: [
+                            'number(${1:min}-${2:max})'
+                        ].join('\n'),
+                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                        documentation: 'Number (min-max) Definition',
                     },
                     // Operator
                     {
@@ -432,14 +487,16 @@ export default class AutoCompleteProvider {
                         documentation: 'If-Else Statement',
                     },
                     {
-                        label: 'number (min-max)',
+                        label: 'colors (Color Range Definition)',
                         kind: monaco.languages.CompletionItemKind.Snippet,
                         insertText: [
-                            'number(${1:min}-${2:max})'
+                            'colors(0 < green <= 100 < yellow <= 200 < red < 300)',
                         ].join('\n'),
                         insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-                        documentation: 'Number (min-max) Definition',
+                        documentation: 'Colors Function',
                     },
+
+
 
                 ].concat(
                     this.constructKeywordAutoCompleteSuggestions(monaco)
