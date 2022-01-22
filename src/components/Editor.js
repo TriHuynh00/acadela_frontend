@@ -3,19 +3,21 @@ import htmlparser from "html-react-parser";
 import Acadela from "../acadelaSetting/Acadela";
 import MonacoEditor from "react-monaco-editor"; /* USE 0.17.2 for item completion*/
 import CompileService from "../services/compiler/CompileService";
-import {treatmentPlanTemplate} from "./TreatmentPlanTemplate"
+import { treatmentPlanTemplate } from "./TreatmentPlanTemplate";
+import { treatmentPlanWithErrorsStr } from "./TreatmentPlanWithErrors";
+
 class Editor extends React.Component {
   constructor(props) {
     super(props);
-    
+
     this.state = {
-      code:
-      treatmentPlanTemplate,
+      code: treatmentPlanTemplate,
       error: false,
       success: false,
       successMessage: "Successfully Compiled",
       errorMessage: "",
       loading: false,
+      currentTemplate: "hypertension",
     };
   }
 
@@ -39,7 +41,10 @@ class Editor extends React.Component {
         success: true,
         error: false,
         code: codeVal,
-        successMessage: flag==="submit" ? "Successfully load the case into SACM!":"Successfully Compiled!",
+        successMessage:
+          flag === "submit"
+            ? "Successfully load the case into SACM!"
+            : "Successfully Compiled!",
         loading: false,
       });
     } else if (result.status === 213) {
@@ -154,6 +159,51 @@ class Editor extends React.Component {
             {this.state.loading && (
               <span className="visually-hidden">Loading...</span>
             )}
+            <button
+              onClick={() =>
+                this.setState({
+                  code: treatmentPlanWithErrorsStr,
+                  currentTemplate: "cholesterol",
+                })
+              }
+              disabled={this.state.currentTemplate === "cholesterol"}
+              style={{
+                //backgroundColor: "#008CBA",
+                //color: "white",
+                padding: "10px 15px",
+                marginLeft: 60,
+                marginRight: 20,
+                marginBottom: 20,
+                fontWeight: "bold",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+              }}
+            >
+              Load Cholesterol Treatment
+            </button>
+            <button
+              onClick={() =>
+                this.setState({
+                  code: treatmentPlanTemplate,
+                  currentTemplate: "hypertension",
+                })
+              }
+              disabled={this.state.currentTemplate === "hypertension"}
+              style={{
+                //backgroundColor: "#008CBA",
+                //color: "white",
+                padding: "10px 15px",
+                marginRight: 20,
+                marginBottom: 20,
+                fontWeight: "bold",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+              }}
+            >
+              Load Hypertension Treatment
+            </button>
           </div>
         </div>
         <div>
@@ -167,8 +217,8 @@ class Editor extends React.Component {
                 marginBottom: 10,
                 borderStyle: "solid",
                 borderWidth: "2px",
-                fontSize: '15px',
-                fontWeight:500
+                fontSize: "14px",
+                fontWeight: 500,
               }}
               rows="9"
               readOnly
@@ -185,8 +235,8 @@ class Editor extends React.Component {
                 marginBottom: 10,
                 borderStyle: "solid",
                 borderWidth: "2px",
-                fontSize: '15px',
-                fontWeight:500
+                fontSize: "14px",
+                fontWeight: 500,
               }}
               rows="3"
               readOnly
