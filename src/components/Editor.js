@@ -166,7 +166,7 @@ class Editor extends React.Component {
                   currentTemplate: "cholesterol",
                 })
               }
-              disabled={this.state.currentTemplate === "cholesterol"}
+              disabled={true/*this.state.currentTemplate === "cholesterol"*/}
               style={{
                 //backgroundColor: "#008CBA",
                 //color: "white",
