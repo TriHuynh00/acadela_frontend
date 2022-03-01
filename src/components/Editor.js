@@ -5,6 +5,7 @@ import MonacoEditor from "react-monaco-editor"; /* USE 0.17.2 for item completio
 import CompileService from "../services/compiler/CompileService";
 import { treatmentPlanTemplate } from "./TreatmentPlanTemplate";
 import { treatmentPlanWithErrorsStr } from "./TreatmentPlanWithErrors";
+import { treatmentPlanExercise } from "./TreatmentPlanExercise";
 
 class Editor extends React.Component {
   constructor(props) {
@@ -159,19 +160,20 @@ class Editor extends React.Component {
             {this.state.loading && (
               <span className="visually-hidden">Loading...</span>
             )}
+
             <button
               onClick={() =>
                 this.setState({
-                  code: treatmentPlanWithErrorsStr,
-                  currentTemplate: "cholesterol",
+                  code: treatmentPlanExercise,
+                  currentTemplate: "exercise",
                 })
               }
-              disabled={true/*this.state.currentTemplate === "cholesterol"*/}
+              disabled={this.state.currentTemplate === "exercise"}
               style={{
                 //backgroundColor: "#008CBA",
                 //color: "white",
                 padding: "10px 15px",
-                marginLeft: 60,
+                marginLeft: 30,
                 marginRight: 20,
                 marginBottom: 20,
                 fontWeight: "bold",
@@ -180,7 +182,7 @@ class Editor extends React.Component {
                 cursor: "pointer",
               }}
             >
-              Load Cholesterol Treatment
+              Load Exercise Trt
             </button>
             <button
               onClick={() =>
@@ -202,7 +204,30 @@ class Editor extends React.Component {
                 cursor: "pointer",
               }}
             >
-              Load Hypertension Treatment
+              Load Hypertension Trt
+            </button>
+            <button
+              onClick={() =>
+                this.setState({
+                  code: treatmentPlanWithErrorsStr,
+                  currentTemplate: "cholesterol",
+                })
+              }
+              disabled={this.state.currentTemplate === "cholesterol"}
+              style={{
+                //backgroundColor: "#008CBA",
+                //color: "white",
+                padding: "10px 15px",
+                //marginLeft: 60,
+                marginRight: 20,
+                marginBottom: 20,
+                fontWeight: "bold",
+                border: "none",
+                borderRadius: "4px",
+                cursor: "pointer",
+              }}
+            >
+              Load Cholesterol Trt
             </button>
           </div>
         </div>

@@ -1,4 +1,4 @@
-export const treatmentPlanTemplate =      '#aca0.1\n' +
+export const treatmentPlanTemplate = '#aca0.1\n' +
 'import extfile.redGreenUiRef as rgu\n' +
 '\n' +
 'workspace Umcg\n' +
@@ -139,7 +139,10 @@ export const treatmentPlanTemplate =      '#aca0.1\n' +
 '                                  else if (Diastolic <= 89) then "Elevated" \n' +
 `                                  else "High"'\n` +
 '                                  \n' +
-'                //Add OverallAssessment Field HERE\n' +
+'                OutputField OverallAssessment\n' +
+'                    #left \n' +
+"                    label = 'Overall Assessment:'\n" +
+                   
 '\n' +
 '    Stage MedicalTest\n' +
 '        #mandatory\n' +

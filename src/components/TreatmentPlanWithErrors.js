@@ -98,19 +98,19 @@ export const treatmentPlanWithErrorsStr = '#aca0.1\n' +
 '                #left \n' +
 "                label = 'CholesterolLvl Assessment:'\n" +
 `                expression = ' if (CholesterolMol < 80): "Normal"\n` +
-'                              else if CholesterolLvl <= 89) then "Elevated" \n' +
+'                              else if (CholesterolLvl <= 89) then "Elevated" \n' +
 `                              else "High"'\n` +
 '                              \n' +
 '\n' +
 '    Stage Treatment\n' +
 '        #mandatory\n' +
-"        owner = 'Setting.Clinician'\n" +
+"        group = 'Setting.Clinician'\n" +
 "        label = 'Treatment'\n" +
 '\n' +
 '        // Define two Preconditions to express the OR logic between them\n' +
 '        Precondition\n' +
 "            previousStep = 'MedicalTest' \n" +
-"            precondition = 'MedicalTest.CholesterolLvl>100' \n" +
+"            condition = 'MedicalTest.CholesterolLvl>100' \n" +
 
 '\n' +
 '        use Task prescription.Prescribe\n' +
@@ -120,11 +120,11 @@ export const treatmentPlanWithErrorsStr = '#aca0.1\n' +
 "        owner = 'Setting.CaseOwner'\n" +
 "        label = 'Discharge'\n" +
 '        \n' +
-'        precondition\n' +
+'        Precondition\n' +
 "            previousStep = 'Identification'\n" +
 '        \n' +
 '        HumanTask DischargePatient\n' +
-'            #nomandatory\n' +
+'            #notmandatory\n' +
 "            owner = 'Setting.CaseOwner'\n" +
 '            label = "Discharge Patient"\n' +
 '            \n' +
