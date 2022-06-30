@@ -1,4 +1,4 @@
-export const treatmentPlanTemplate =      '#aca0.1\n' +
+export const treatmentPlanExercise = '#aca0.1\n' +
 'import extfile.redGreenUiRef as rgu\n' +
 '\n' +
 'workspace Umcg\n' +
@@ -48,11 +48,7 @@ export const treatmentPlanTemplate =      '#aca0.1\n' +
 '    SummaryPanel\n' +
 '        Section BloodPressureMeasurement #left\n' +
 '            label = "Systolic Pressure:"\n' +
-'            InfoPath Evaluation.MeasureBloodPressure.Systolic\n' +
-'\n' +
-'        Section DoctorNote #left\n' +
-'            label = "Recommendations"\n' +
-'            InfoPath Discharge.DischargePatient.DoctorNote\n' +
+'            InfoPath Evaluation.MeasureBloodPressure.Diastolic\n' +
 '\n' +
 '    Stage Identification\n' +
 '        #mandatory\n' +
@@ -99,6 +95,7 @@ export const treatmentPlanTemplate =      '#aca0.1\n' +
 '                \n' +
 '                Precondition\n' +
 "                    previousStep = 'MeasureBloodPressure'\n" +
+"                    previousStep = 'MeasureBloodCholesterol'\n" +
 `                    condition = 'Setting.BloodPressureCondition = "High"'\n` +
 '\n' +
 '                Form CgiForm\n' +
@@ -116,14 +113,6 @@ export const treatmentPlanTemplate =      '#aca0.1\n' +
 '            \n' +
 '            Form BloodPressureForm\n' +
 '\n' +
-'                OutputField SystolicAnalysis\n' +
-'                    #left\n' +
-"                    label = 'Systolic Assessment:'\n" +
-'                    uiRef = use rgu.redGreenUiRef\n' +
-`                    expression = 'if (Systolic<120) then "Normal"\n` +
-`                            else "High"'\n` +
-'                            \n' +
-'                            \n' +
 '                InputField Diastolic\n' +
 '                    #number(0-300)\n' +
 "                    label = 'Diastolic Blood pressure (mm Hg):'\n" +
@@ -155,13 +144,13 @@ export const treatmentPlanTemplate =      '#aca0.1\n' +
 '            Form PrescriptionForm\n' +
 '                InputField CholesterolLvl\n' +
 '                    #text #left #mandatory\n' +
-'                    label = "Blood Cholesterol Level (mm/L):" \n' +
-'\n' +
-'    Stage Treatment\n' +
-'        #mandatory\n' +
-"        owner = 'Setting.Clinician'\n" +
-"        label = 'Treatment'\n" +
-'\n' +
-'        Precondition\n' +
-"            previousStep = 'Evaluation' \n" +
-"            condition = 'Evaluation.RequestMedicalTest.CholesterolTest = 0'"
+'                    label = "Blood Cholesterol Level (mm/L):" \n'
+// '\n' +
+// '    Stage Treatment\n' +
+// '        #mandatory\n' +
+// "        owner = 'Setting.Clinician'\n" +
+// "        label = 'Treatment'\n" +
+// '\n' +
+// '        Precondition\n' +
+// "            previousStep = 'Evaluation' \n" +
+// "            condition = 'Evaluation.RequestMedicalTest.CholesterolTest = 0'"

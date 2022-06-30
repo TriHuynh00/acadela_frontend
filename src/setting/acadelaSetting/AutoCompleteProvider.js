@@ -451,6 +451,16 @@ export default class AutoCompleteProvider {
                         documentation: 'Complete OutputField Definition',
                     },
                     {
+                        label: 'Precondition (Full)',
+                        kind: monaco.languages.CompletionItemKind.Snippet,
+                        insertText: ['Precondition',
+                            '\tpreviousStep = "STAGE_OR_TASK_NAME"',
+                            '\tcondition = "FIELDPATH_OPERATOR_VARIABLE"'
+                        ].join('\n'),
+                        insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
+                        documentation: 'Complete Precondition Definition',
+                    },
+                    {
                         label: 'number (min-max)',
                         kind: monaco.languages.CompletionItemKind.Snippet,
                         insertText: [

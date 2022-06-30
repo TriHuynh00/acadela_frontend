@@ -1,0 +1,6 @@
+.diagram-component {
+    width: 50vw ;
+    height: 80vh;
+    border: solid 1px black;
+    background-color: white;
+}
