@@ -3,7 +3,8 @@ import htmlparser from "html-react-parser";
 import Acadela from "../setting/acadelaSetting/Acadela";
 import MonacoEditor from "react-monaco-editor"; /* USE 0.17.2 for item completion*/
 import CompileService from "../services/compiler/CompileService";
-import CaseJsonParserService from "../services/visualizer/CaseJsonParserService";
+import parseJsonCpService from "../services/visualizer/CaseJsonParserService";
+import CpGraphConstructor from "../services/visualizer/CpGraphConstructor";
 import { treatmentPlanTemplate } from "./TreatmentPlanTemplate";
 import { treatmentPlanExercise } from "./TreatmentPlanExercise";
 import { treatmentPlanWithErrorsStr } from "./TreatmentPlanWithErrors";
@@ -50,29 +51,35 @@ class Editor extends React.Component {
         // Object.keys(data).forEach((prop)=> console.log(`${prop}: ${data.prop}`));
         // console.log(result.toString().substring(result.indexOf('"jsonTemplate"')));
 
-        this.props.setNodeDataArray(
-            [
-                { key: "Identification", text: 'Identification', bgColor: GRAPH_COLOR_CODE.STAGE, textColor: "white", loc: '0 0', isGroup: true },
-                { key: "AdmitPatient", text: 'Admit Patient', color: 'lightblue', group: 'Identification' },
-                { key: "Consent", text: 'Consent', color: 'lightblue',  group: 'Identification'},
 
-                { key: "Evaluation", text: 'Evaluation', bgColor: GRAPH_COLOR_CODE.STAGE, textColor: "white", loc: '500 0', isGroup: true },
-                { key: "MeasureBloodPressure", text: 'Measure Blood Pressure', bgColor: GRAPH_COLOR_CODE.TASK, textColor: "white", group: 'Evaluation', isGroup: true },
-                { key: "Systolic", text: 'Systolic', color: GRAPH_COLOR_CODE.INPUTFIELD, stroke: "white", group: 'MeasureBloodPressure' },
-                { key: "Diastolic", text: 'Diastolic', color: GRAPH_COLOR_CODE.OUTPUTFIELD, stroke: "white", group: 'MeasureBloodPressure' },
-                { key: "Hook", text: 'Hook1', color: GRAPH_COLOR_CODE.EXTERNALCOMM, group: 'MeasureBloodPressure' },
-                { key: "MeasureCGI", text: 'Measure CGI', color: 'lightblue',  group: 'Evaluation'},
-            ]
+        // this.props.setNodeDataArray(
+        //     [
+        //         { key: "Identification", text: 'Identification', bgColor: GRAPH_COLOR_CODE.STAGE, textColor: "white", loc: '0 0', isGroup: true },
+        //         { key: "AdmitPatient", text: 'Admit Patient', color: 'lightblue', group: 'Identification' },
+        //         { key: "Consent", text: 'Consent', color: 'lightblue',  group: 'Identification'},
+        //
+        //         { key: "Evaluation", text: 'Evaluation', bgColor: GRAPH_COLOR_CODE.STAGE, textColor: "white", loc: '500 0', isGroup: true },
+        //         { key: "MeasureBloodPressure", text: 'Measure Blood Pressure', bgColor: GRAPH_COLOR_CODE.TASK, textColor: "white", group: 'Evaluation', isGroup: true },
+        //         { key: "Systolic", text: 'Systolic', color: GRAPH_COLOR_CODE.INPUTFIELD, stroke: "white", group: 'MeasureBloodPressure' },
+        //         { key: "Diastolic", text: 'Diastolic', color: GRAPH_COLOR_CODE.OUTPUTFIELD, stroke: "white", group: 'MeasureBloodPressure' },
+        //         { key: "Hook", text: 'Hook1', color: GRAPH_COLOR_CODE.EXTERNALCOMM, group: 'MeasureBloodPressure' },
+        //         { key: "MeasureCGI", text: 'Measure CGI', color: 'lightblue',  group: 'Evaluation'},
+        //     ]
+        // );
+
+
+
+        console.log("Parsing CP in JSON")
+        const caseDef = parseJsonCpService("{" + caseJson);
+        console.log(`returned case def \n${caseDef}`);
+
+        this.props.setNodeDataArray(
+            CpGraphConstructor.createCpGraphNodeArray(caseDef)
         );
 
         this.props.setLinkDataArray(
-            [
-                { from: 'Identification', to: "Evaluation", condText: "Identification.ConsentForm.Consent=1 and \n Identification.ConsentForm.Consent > 0" },
-            ]
+            CpGraphConstructor.getLinkArray()
         );
-
-        console.log("Parsing CP in JSON")
-        CaseJsonParserService.parseJsonCp("{" + caseJson);
 
         this.setState({
             success: true,
