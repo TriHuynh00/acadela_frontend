@@ -3,10 +3,12 @@ import GRAPH_COLOR_CODE from "../../setting/graphSetting/elementColors";
 var cpPrefix = "";
 var graphLinkArray = [];
 const hookUrlMaxChars = 15;
+const precondMaxLen = 50;
 
 
 function createCpGraphNodeArray(cpDefJson) {
     var graphNodeArray = [];
+    graphLinkArray = [];
     const stageList = cpDefJson.StageList;
 
     cpPrefix = cpDefJson.prefix;
@@ -30,10 +32,11 @@ function createStageNode(stage, index) {
 
     var hasTransitionCondition = false;
     if (stage.SentryDefinition != null) {
+
         stage.SentryDefinition.forEach((condition) => {
 
             condition.precondition.forEach((precond) => {
-                const condExpression = precond.$.simplifiedExpression;
+                var condExpression = precond.$.simplifiedExpression;
                 const previousStep = precond.$.processDefinitionId;
 
                 var startNode = "";
@@ -44,11 +47,14 @@ function createStageNode(stage, index) {
 
                     console.log("Found 1 transition cond\n" + condExpression);
 
-                    let rootElement = condExpression.substring(
-                        condExpression.indexOf(cpPrefix),
-                        condExpression.indexOf("."));
+                    let rootElement = removePrefix(precond.$.processDefinitionId);
 
-                    rootElement = removePrefix(rootElement);
+                    // If the condition is long, only accepts the first 20 chars
+                    // and 3 dots
+                    if (condExpression.length > precondMaxLen) {
+                        condExpression = condExpression.substring(0, precondMaxLen)
+                                + "...";
+                    }
 
                     const linkNode = {
                         from: rootElement,
@@ -63,7 +69,7 @@ function createStageNode(stage, index) {
                     const linkNode = {
                         from: removePrefix(previousStep),
                         to: stage.$.id,
-                    }
+                    };
                     graphLinkArray.push(linkNode);
                 }
             });

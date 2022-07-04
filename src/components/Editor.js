@@ -27,7 +27,6 @@ class Editor extends React.Component {
     };
   }
 
-
   submitCode = async (flag) => {
     const codeVal = this.editor.getValue();
     const request = {};
@@ -51,7 +50,6 @@ class Editor extends React.Component {
         // Object.keys(data).forEach((prop)=> console.log(`${prop}: ${data.prop}`));
         // console.log(result.toString().substring(result.indexOf('"jsonTemplate"')));
 
-
         // this.props.setNodeDataArray(
         //     [
         //         { key: "Identification", text: 'Identification', bgColor: GRAPH_COLOR_CODE.STAGE, textColor: "white", loc: '0 0', isGroup: true },
@@ -67,11 +65,13 @@ class Editor extends React.Component {
         //     ]
         // );
 
-
-
         console.log("Parsing CP in JSON")
         const caseDef = parseJsonCpService("{" + caseJson);
         console.log(`returned case def \n${caseDef}`);
+
+        // clear the graph before creating the new one
+        this.props.setNodeDataArray([]);
+        this.props.setLinkDataArray([]);
 
         this.props.setNodeDataArray(
             CpGraphConstructor.createCpGraphNodeArray(caseDef)

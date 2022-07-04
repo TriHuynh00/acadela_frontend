@@ -17,7 +17,9 @@ function initDiagram() {
                 model: new go.GraphLinksModel(
                     {
                         linkKeyProperty: 'key'  // IMPORTANT! must be defined for merges and data sync when using GraphLinksModel
-                    })
+                    }),
+                layout: $(go.TreeLayout,
+                    { comparer: go.LayoutVertex.smartComparer })
             });
 
     diagram.groupTemplate =
@@ -63,6 +65,11 @@ function initDiagram() {
     // Define link to represent sentries (preconditions)
     diagram.linkTemplate =
         $(go.Link,
+            {
+                routing: go.Link.AvoidsNodes,
+                curve: go.Link.Bezier,
+                corner: 10
+            },
             $(go.Shape),                           // this is the link shape (the line)
             $(go.Shape, { toArrow: "Standard" }),  // this is an arrowhead
             $(go.TextBlock,                        // this is a Link label
@@ -78,7 +85,9 @@ function initDiagram() {
     // define a simple Node template
     diagram.nodeTemplate =
         $(go.Node, 'Auto',  // the Shape will go around the TextBlock
-            new go.Binding('location', 'loc', go.Point.parse).makeTwoWay(go.Point.stringify),
+            new go.Binding('location',
+                'loc',
+                            go.Point.parse).makeTwoWay(go.Point.stringify),
             $(go.Shape, 'RoundedRectangle',
                 { name: 'SHAPE', fill: 'white', strokeWidth: 0 },
                 // Shape.fill is bound to Node.data.color
@@ -89,7 +98,6 @@ function initDiagram() {
                 new go.Binding('stroke').makeTwoWay(),
             )
         );
-
     return diagram;
 }
 
