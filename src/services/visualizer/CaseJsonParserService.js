@@ -1,10 +1,9 @@
 import HttpService from "../HttpService";
 
-
 function parseJsonCpService(cpJson) {
     console.log(cpJson);
 
-    const cp = JSON.parse(cpJson);
+    const cp = JSON.parse(cpJson.toString().trim());
 
     const wp = cp.jsonTemplate
                         .SACMDefinition

@@ -5,6 +5,8 @@ import { ReactDiagram } from 'gojs-react';
 import GRAPH_COLOR_CODE from "../setting/graphSetting/elementColors";
 import './CpDiagram.css';
 
+
+
 function initDiagram() {
     const $ = go.GraphObject.make;
     // set your license key here before creating the diagram: go.Diagram.licenseKey = "...";
@@ -24,6 +26,7 @@ function initDiagram() {
 
     diagram.groupTemplate =
         $(go.Group, "Auto",
+            new go.Binding("lineNumber").makeTwoWay(),
             new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
             {
                 alignment: go.Spot.Center,
@@ -85,6 +88,7 @@ function initDiagram() {
     // define a simple Node template
     diagram.nodeTemplate =
         $(go.Node, 'Auto',  // the Shape will go around the TextBlock
+            new go.Binding("lineNumber").makeTwoWay(),
             new go.Binding('location',
                 'loc',
                             go.Point.parse).makeTwoWay(go.Point.stringify),
@@ -98,6 +102,18 @@ function initDiagram() {
                 new go.Binding('stroke').makeTwoWay(),
             )
         );
+
+    diagram.addDiagramListener("ObjectDoubleClicked",
+        function(e) {
+            var part = e.subject.part;
+            if (!(part instanceof go.Link)) {
+                console.log("Clicked on " + part.data.lineNumber);
+                const event = new CustomEvent('graphClick',
+                    { detail: part.data.lineNumber });
+                window.dispatchEvent(event);
+            }
+        });
+
     return diagram;
 }
 

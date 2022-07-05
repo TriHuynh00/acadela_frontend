@@ -13,7 +13,6 @@ import GRAPH_COLOR_CODE from "../setting/graphSetting/elementColors";
 class Editor extends React.Component {
   constructor(props) {
     super(props);
-
     this.state = {
       code: treatmentPlanTemplate,
       error: false,
@@ -25,7 +24,9 @@ class Editor extends React.Component {
       loading: false,
       currentTemplate: "hypertension",
     };
+
   }
+
 
   submitCode = async (flag) => {
     const codeVal = this.editor.getValue();
@@ -45,25 +46,17 @@ class Editor extends React.Component {
     if (result.status === 201) {
         var res = JSON.parse(JSON.stringify(result)).data;
         // console.log(`SACM Case Template\n${res}`);
-        var caseJson = res.substring(res.indexOf('"jsonTemplate"'));
+        var caseJson = '';
+        if (flag === 'submit') {
+            caseJson = res.substring(res.indexOf('\"jsonTemplate\"'),
+                                     res.indexOf('}\nresponse') + 1);
+        } else if (flag === 'validate') {
+            caseJson = res.substring(res.indexOf('"jsonTemplate"'));
+        }
+
         console.log(caseJson);
         // Object.keys(data).forEach((prop)=> console.log(`${prop}: ${data.prop}`));
         // console.log(result.toString().substring(result.indexOf('"jsonTemplate"')));
-
-        // this.props.setNodeDataArray(
-        //     [
-        //         { key: "Identification", text: 'Identification', bgColor: GRAPH_COLOR_CODE.STAGE, textColor: "white", loc: '0 0', isGroup: true },
-        //         { key: "AdmitPatient", text: 'Admit Patient', color: 'lightblue', group: 'Identification' },
-        //         { key: "Consent", text: 'Consent', color: 'lightblue',  group: 'Identification'},
-        //
-        //         { key: "Evaluation", text: 'Evaluation', bgColor: GRAPH_COLOR_CODE.STAGE, textColor: "white", loc: '500 0', isGroup: true },
-        //         { key: "MeasureBloodPressure", text: 'Measure Blood Pressure', bgColor: GRAPH_COLOR_CODE.TASK, textColor: "white", group: 'Evaluation', isGroup: true },
-        //         { key: "Systolic", text: 'Systolic', color: GRAPH_COLOR_CODE.INPUTFIELD, stroke: "white", group: 'MeasureBloodPressure' },
-        //         { key: "Diastolic", text: 'Diastolic', color: GRAPH_COLOR_CODE.OUTPUTFIELD, stroke: "white", group: 'MeasureBloodPressure' },
-        //         { key: "Hook", text: 'Hook1', color: GRAPH_COLOR_CODE.EXTERNALCOMM, group: 'MeasureBloodPressure' },
-        //         { key: "MeasureCGI", text: 'Measure CGI', color: 'lightblue',  group: 'Evaluation'},
-        //     ]
-        // );
 
         console.log("Parsing CP in JSON")
         const caseDef = parseJsonCpService("{" + caseJson);
@@ -138,6 +131,13 @@ class Editor extends React.Component {
     this.editor = editor;
     editor.focus();
     console.log(window.innerWidth);
+
+    // Event to center the line of code in the graphclick
+      window.addEventListener("graphClick",
+          function(e) {
+              console.log(`Graph click event triggered with line ${e.detail}`);
+              editor.revealLineInCenter(e.detail);
+          });
   };
 
   onChange = (newValue, e) => {
@@ -154,6 +154,7 @@ class Editor extends React.Component {
         <div >
           <MonacoEditor
             id="AcadelaEditor"
+            ref={this.editorRef}
             width={this.state.ideWidth}
             height={this.state.ideHeight}
             language={Acadela.getName()}
@@ -164,6 +165,7 @@ class Editor extends React.Component {
             onChange={this.onChange}
             editorWillMount={this.editorWillMount}
             editorDidMount={this.editorDidMount}
+
           />
           <div
             style={{

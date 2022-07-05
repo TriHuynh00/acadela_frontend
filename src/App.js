@@ -1,4 +1,5 @@
 import React, {useState} from "react";
+import monaco from 'react-monaco-editor';
 import Editor from "./components/Editor";
 import GoDiagram from "./components/CpDiagram";
 
@@ -8,6 +9,7 @@ function App () {
             { key: 0, text: 'Please click the "Validate" button to visualize your CP', color: 'lightblue', loc: '0 0' },
         ]
     );
+
     const[linkDataArray, setLinkDataArray] = useState([]);
 
     const updateNodeList = (nodeList) => {
@@ -17,8 +19,12 @@ function App () {
 
     return (
         <div style={{display: "flex"}}>
-            <Editor setNodeDataArray={updateNodeList} setLinkDataArray={setLinkDataArray}/>
-            <GoDiagram nodeArray={nodeDataArray} linkArray={linkDataArray}/>
+
+            <Editor setNodeDataArray={updateNodeList}
+                    setLinkDataArray={setLinkDataArray}sr       />
+
+            <GoDiagram nodeArray={nodeDataArray}
+                       linkArray={linkDataArray}/>
         </div>
     )
 

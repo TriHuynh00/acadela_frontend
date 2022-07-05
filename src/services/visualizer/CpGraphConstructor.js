@@ -88,7 +88,8 @@ function createStageNode(stage, index) {
         bgColor: GRAPH_COLOR_CODE.STAGE,
         textColor: "white",
         loc: locationX + " 0",
-        isGroup: true
+        isGroup: true,
+        lineNumber: stage.$.lineNumber['0']
     };
     return stageNode;
 }
@@ -105,7 +106,8 @@ function createTaskNode(task, stageId) {
         bgColor: GRAPH_COLOR_CODE.TASK,
         textColor: "white",
         group: stageId,
-        isGroup: true
+        isGroup: true,
+        lineNumber: task.$.lineNumber['0']
     };
 
     taskElements.push(taskNode);
@@ -127,7 +129,8 @@ function createTaskNode(task, stageId) {
                 text: fieldName,
                 color: colorCode,
                 stroke: "white",
-                group: task.$.id
+                group: task.$.id,
+                lineNumber: field.$.lineNumber['0']
             };
 
             taskElements.push(fieldNode);
@@ -147,8 +150,9 @@ function createTaskNode(task, stageId) {
                 text: `On ${hook.$.on}\n
                        Call ${shortenedUrl}`,
                 color: GRAPH_COLOR_CODE.EXTERNALCOMM,
-                group: task.$.id
-            }
+                group: task.$.id,
+                lineNumber: hook.$.lineNumber['0']
+            };
 
             taskElements.push(hookNode);
         });
