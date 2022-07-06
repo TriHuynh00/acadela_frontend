@@ -14,7 +14,7 @@ function parseJsonCpService(cpJson) {
     caseDef.prefix = caseDef.id.substring(
                         0,
                         caseDef.id.indexOf('_') + 1);
-    const stageLists = wp[0].CaseDefinition[0].StageDefinition
+    const stageLists = wp[0].CaseDefinition[0].StageDefinition;
 
     stageLists.forEach((stage, index) => {
         addFieldType(stage, wp);

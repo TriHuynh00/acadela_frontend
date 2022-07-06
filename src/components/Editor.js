@@ -10,23 +10,28 @@ import { treatmentPlanExercise } from "./TreatmentPlanExercise";
 import { treatmentPlanWithErrorsStr } from "./TreatmentPlanWithErrors";
 import GRAPH_COLOR_CODE from "../setting/graphSetting/elementColors";
 
+const errMsgNode = {
+    key: 'acadelaErrNode',
+    text: 'Error in code, please see the error message for more information',
+    color: 'red',
+    textColor: "white",
+};
+
 class Editor extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       code: treatmentPlanTemplate,
       error: false,
-			ideWidth: window.innerWidth > 1200 ? window.innerWidth * 0.5 : window.innerWidth,
-			ideHeight: window.innerHeight * 0.75,
+      ideWidth: window.innerWidth > 1200 ? window.innerWidth * 0.5 : window.innerWidth,
+      ideHeight: window.innerHeight * 0.75,
       success: false,
       successMessage: "Successfully Compiled",
       errorMessage: "",
       loading: false,
       currentTemplate: "hypertension",
     };
-
   }
-
 
   submitCode = async (flag) => {
     const codeVal = this.editor.getValue();
@@ -45,8 +50,8 @@ class Editor extends React.Component {
     console.log("the result", result);
     if (result.status === 201) {
         var res = JSON.parse(JSON.stringify(result)).data;
-        // console.log(`SACM Case Template\n${res}`);
         var caseJson = '';
+
         if (flag === 'submit') {
             caseJson = res.substring(res.indexOf('\"jsonTemplate\"'),
                                      res.indexOf('}\nresponse') + 1);
@@ -54,22 +59,16 @@ class Editor extends React.Component {
             caseJson = res.substring(res.indexOf('"jsonTemplate"'));
         }
 
-        console.log(caseJson);
-        // Object.keys(data).forEach((prop)=> console.log(`${prop}: ${data.prop}`));
-        // console.log(result.toString().substring(result.indexOf('"jsonTemplate"')));
-
-        console.log("Parsing CP in JSON")
         const caseDef = parseJsonCpService("{" + caseJson);
-        console.log(`returned case def \n${caseDef}`);
 
         // clear the graph before creating the new one
         this.props.setNodeDataArray([]);
         this.props.setLinkDataArray([]);
 
+        // Draw new CP elements and links
         this.props.setNodeDataArray(
             CpGraphConstructor.createCpGraphNodeArray(caseDef)
         );
-
         this.props.setLinkDataArray(
             CpGraphConstructor.getLinkArray()
         );
@@ -86,6 +85,12 @@ class Editor extends React.Component {
         });
     } else if (result.status === 213) {
       let errorString = "Internal Error";
+
+        // Display an error node on the diagram panel
+        this.props.setNodeDataArray([
+            errMsgNode
+        ]);
+        this.props.setLinkDataArray([]);
 
       if (result?.data?.traceback) {
         let errorArr = result?.data?.traceback.toString().split("Exception:");

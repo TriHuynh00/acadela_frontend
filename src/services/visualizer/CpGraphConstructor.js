@@ -59,7 +59,9 @@ function createStageNode(stage, index) {
                     const linkNode = {
                         from: rootElement,
                         to: stage.$.id,
-                        condText: condExpression
+                        toArrow: "Diamond",
+                        fill: "yellow"
+                        // condText: condExpression
                     };
 
                     graphLinkArray.push(linkNode);
@@ -69,6 +71,8 @@ function createStageNode(stage, index) {
                     const linkNode = {
                         from: removePrefix(previousStep),
                         to: stage.$.id,
+                        toArrow: "Standard",
+                        fill: "black"
                     };
                     graphLinkArray.push(linkNode);
                 }

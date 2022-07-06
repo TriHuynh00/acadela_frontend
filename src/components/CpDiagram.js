@@ -4,7 +4,7 @@ import * as go from 'gojs';
 import { ReactDiagram } from 'gojs-react';
 import GRAPH_COLOR_CODE from "../setting/graphSetting/elementColors";
 import './CpDiagram.css';
-
+import GraphElemTemplate from "../setting/graphSetting/graphTemplate";
 
 
 function initDiagram() {
@@ -15,99 +15,48 @@ function initDiagram() {
             {
                 'undoManager.isEnabled': true,  // must be set to allow for model change listening
                 // 'undoManager.maxHistoryLength': 0,  // uncomment disable undo/redo functionality
-                'clickCreatingTool.archetypeNodeData': { text: 'new node', color: 'lightblue' },
+                'clickCreatingTool.archetypeNodeData':
+                    { text: 'new node', color: 'lightblue' },
                 model: new go.GraphLinksModel(
                     {
                         linkKeyProperty: 'key'  // IMPORTANT! must be defined for merges and data sync when using GraphLinksModel
                     }),
-                layout: $(go.TreeLayout,
-                    { comparer: go.LayoutVertex.smartComparer })
+                layout: $(go.GridLayout,
+                    {
+                        wrappingWidth: 5000,
+                        spacing: go.Size.parse("300 300")
+                    }
+                ),
+                // layout: $(go.TreeLayout,
+                //     {
+                //         setsPortSpot: false,
+                //         angle: 180,
+                //         nodeSpacing: 100,
+                //         layerSpacing: 200
+                //     }
+                // ),
+
             });
 
+    // Group = Task or Stage
     diagram.groupTemplate =
-        $(go.Group, "Auto",
-            new go.Binding("lineNumber").makeTwoWay(),
-            new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
-            {
-                alignment: go.Spot.Center,
-                layout: $(go.LayeredDigraphLayout,
-                    { direction: 180, columnSpacing: 10 }
-                )
-            },
-            $(go.Shape, "RoundedRectangle",  // surrounds the Placeholder
-                new go.Binding("fill", "bgColor"),
-                {
-                    parameter1: 20
-                },
-            ),
-            $(go.Panel, "Vertical",
-                {
-                    defaultAlignment: go.Spot.Top,
-                },
-                $("SubGraphExpanderButton"),
-                $(go.TextBlock,         // group title
-                    {
-                        font: "Bold 12pt Sans-Serif",
-                        verticalAlignment: go.Spot.Top,
-                        margin: 2
-                    },
+        GraphElemTemplate.constructGroupTemplate($);
 
-                    new go.Binding("stroke", "textColor"),
-                    new go.Binding("text", "key")
-                ),
-
-                $(go.Placeholder,    // represents the area of all member parts,
-                    {
-                        padding: 10,
-                    }
-                )  // with some extra padding around them
-            ),
-        );
-
-
-    // Define link to represent sentries (preconditions)
+    // Link = Sentry
     diagram.linkTemplate =
-        $(go.Link,
-            {
-                routing: go.Link.AvoidsNodes,
-                curve: go.Link.Bezier,
-                corner: 10
-            },
-            $(go.Shape),                           // this is the link shape (the line)
-            $(go.Shape, { toArrow: "Standard" }),  // this is an arrowhead
-            $(go.TextBlock,                        // this is a Link label
-                new go.Binding("text", "condText"),
-                {
-                    stroke: GRAPH_COLOR_CODE.CONDITION,
-                    segmentOffset: new go.Point(0, -30),
-                    segmentOrientation: go.Link.OrientUpright
-                }
-            )
-        );
+        GraphElemTemplate.constructLinkTemplate($);
 
-    // define a simple Node template
+    // Node = Input/Output fields or Hooks (External Requests)
     diagram.nodeTemplate =
-        $(go.Node, 'Auto',  // the Shape will go around the TextBlock
-            new go.Binding("lineNumber").makeTwoWay(),
-            new go.Binding('location',
-                'loc',
-                            go.Point.parse).makeTwoWay(go.Point.stringify),
-            $(go.Shape, 'RoundedRectangle',
-                { name: 'SHAPE', fill: 'white', strokeWidth: 0 },
-                // Shape.fill is bound to Node.data.color
-                new go.Binding('fill', 'color')),
-            $(go.TextBlock,
-                { margin: 8, editable: true },  // some room around the text
-                new go.Binding('text').makeTwoWay(),
-                new go.Binding('stroke').makeTwoWay(),
-            )
-        );
+        GraphElemTemplate.constructNodeTemplate($);
 
+    // When double-clicked on a graph element
+    // Add the component line into an event (graphClick) and fire it.
+    // The editor listens to this event and focuses on the line
     diagram.addDiagramListener("ObjectDoubleClicked",
         function(e) {
             var part = e.subject.part;
             if (!(part instanceof go.Link)) {
-                console.log("Clicked on " + part.data.lineNumber);
                 const event = new CustomEvent('graphClick',
                     { detail: part.data.lineNumber });
                 window.dispatchEvent(event);
