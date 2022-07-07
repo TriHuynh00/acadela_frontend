@@ -31,16 +31,17 @@ function createCpGraphNodeArray(cpDefJson) {
 function createStageNode(stage, index) {
 
     var hasTransitionCondition = false;
+
     if (stage.SentryDefinition != null) {
 
         stage.SentryDefinition.forEach((condition) => {
 
             condition.precondition.forEach((precond) => {
-                var condExpression = precond.$.simplifiedExpression;
+                let condExpression = precond.$.simplifiedExpression;
                 const previousStep = precond.$.processDefinitionId;
 
-                var startNode = "";
-                var linkLabel = "";
+                let linkNode = {};
+
                 // Parse link between stages as transition condition first.
                 if (condExpression != null) {
                     hasTransitionCondition = true;
@@ -56,26 +57,38 @@ function createStageNode(stage, index) {
                                 + "...";
                     }
 
-                    const linkNode = {
+                    linkNode = {
                         from: rootElement,
                         to: stage.$.id,
                         toArrow: "Diamond",
-                        fill: "yellow"
+                        fill: "yellow",
                         // condText: condExpression
                     };
+                    // Repeated stage has a diamond from bottom to left
+                    if (rootElement == stage.$.id) {
+                        linkNode.fromSpot = "TopLeft";
+                        linkNode.toSpot = "Top";
+                    }
 
-                    graphLinkArray.push(linkNode);
                 } // No transition condition = set Previous Step as start Node
                 else if (previousStep != null)
                 {
-                    const linkNode = {
+                     linkNode = {
                         from: removePrefix(previousStep),
                         to: stage.$.id,
                         toArrow: "Standard",
                         fill: "black"
                     };
+
+                }
+
+                if (linkNode != {}) {
+                    if (precond.$.lineNumber != null) {
+                        linkNode.lineNumber = precond.$.lineNumber['0'];
+                    }
                     graphLinkArray.push(linkNode);
                 }
+
             });
 
         });
@@ -102,7 +115,7 @@ function createStageNode(stage, index) {
 // Input/Output Fields and Hooks (external systems communication)
 function createTaskNode(task, stageId) {
     var taskElements = [];
-    task.$.id = removePrefix(task.$.id)
+    task.$.id = removePrefix(task.$.id);
 
     const taskNode = {
         key: task.$.id,
@@ -120,9 +133,14 @@ function createTaskNode(task, stageId) {
     const fieldList = task.TaskParamDefinition;
     if (fieldList != null) {
         fieldList.forEach((field) => {
-            var colorCode = field.$.fieldType === "input" ?
-                GRAPH_COLOR_CODE.INPUTFIELD :
-                GRAPH_COLOR_CODE.OUTPUTFIELD;
+            var colorCode = "";
+            if (field.$.fieldType === "inputfield") {
+                colorCode = GRAPH_COLOR_CODE.INPUTFIELD;
+            } else if (field.$.fieldType === "outputfield") {
+                colorCode = GRAPH_COLOR_CODE.OUTPUTFIELD;
+            } else {
+                colorCode = 'orange'; // Unknown field type!
+            }
 
             var fieldName = field.$.path;
             fieldName = fieldName.substring(

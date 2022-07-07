@@ -52,6 +52,9 @@ class GraphElemTemplate {
     // Define link to represent sentries (preconditions)
     static constructLinkTemplate = ($) => {
         return $(go.Link,
+            new go.Binding("fromSpot", "fromSpot", go.Spot.parse),
+            new go.Binding("toSpot", "toSpot", go.Spot.parse),
+            new go.Binding("lineNumber").makeTwoWay(),
             {
                 routing: go.Link.AvoidsNodes,
                 curve: go.Link.JumpOver,

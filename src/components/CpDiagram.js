@@ -24,7 +24,7 @@ function initDiagram() {
                 layout: $(go.GridLayout,
                     {
                         wrappingWidth: 5000,
-                        spacing: go.Size.parse("300 300")
+                        spacing: go.Size.parse("400 300")
                     }
                 ),
                 // layout: $(go.TreeLayout,
@@ -55,8 +55,8 @@ function initDiagram() {
     // The editor listens to this event and focuses on the line
     diagram.addDiagramListener("ObjectDoubleClicked",
         function(e) {
-            var part = e.subject.part;
-            if (!(part instanceof go.Link)) {
+            let part = e.subject.part;
+            if (part.data.lineNumber != null) {
                 const event = new CustomEvent('graphClick',
                     { detail: part.data.lineNumber });
                 window.dispatchEvent(event);

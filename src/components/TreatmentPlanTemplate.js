@@ -109,26 +109,24 @@ export const treatmentPlanTemplate =      '#aca0.1\n' +
 "                        Option 'Yes' value='1'\n" +
 '\n' +
 '            HumanTask MeasureBloodPressure\n' +
-'            #mandatory #exactlyOne\n' +
-"            label = 'Measure Blood Pressure'\n" +
-"            owner= 'Setting.Clinician'\n" +
-"            dueDateRef = 'Setting.WorkplanDueDate'\n" +
+'               #mandatory #exactlyOne\n' +
+"               label = 'Measure Blood Pressure'\n" +
+"               owner = 'Setting.Clinician'\n" +
+"               dueDateRef = 'Setting.WorkplanDueDate'\n" +
 '            \n' +
-'            Form BloodPressureForm\n' +
+'               Form BloodPressureForm\n' +
 '\n' +
-'                OutputField SystolicAnalysis\n' +
-'                    #left\n' +
-"                    label = 'Systolic Assessment:'\n" +
-'                    uiRef = use rgu.redGreenUiRef\n' +
-`                    expression = 'if (Systolic<120) then "Normal"\n` +
+'                   OutputField SystolicAnalysis\n' +
+'                       #left\n' +
+"                       label = 'Systolic Assessment:'\n" +
+'                       uiRef = use rgu.redGreenUiRef\n' +
+`                       expression = 'if (Systolic<120) then "Normal"\n` +
 `                            else "High"'\n` +
-'                            \n' +
 '                            \n' +
 '                InputField Diastolic\n' +
 '                    #number(0-300)\n' +
 "                    label = 'Diastolic Blood pressure (mm Hg):'\n" +
 "                    uiRef = 'colors(0<green<=80<yellow<=89<red<300)'\n" +
-'\n' +
 '\n' +
 '                OutputField DiastolicAnalysis\n' +
 '                    #left \n' +
@@ -137,6 +135,10 @@ export const treatmentPlanTemplate =      '#aca0.1\n' +
 '                                  else if (Diastolic <= 89) then "Elevated" \n' +
 `                                  else "High"'\n` +
 '                                  \n' +
+'                OutputField OverallAssessment\n' +
+'                    #left #custom\n' +
+'                    CustomFieldValue = "Setting.BloodPressureCondition"\n' +
+'                    label = \'Overall Assessment:\'\n' +
 '\n' +
 '    Stage MedicalTest\n' +
 '        #mandatory\n' +
