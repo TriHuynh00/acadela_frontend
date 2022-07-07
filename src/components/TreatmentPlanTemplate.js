@@ -79,8 +79,8 @@ export const treatmentPlanTemplate =      '#aca0.1\n' +
 '                    label = "Assigned Clinician"\n' +
 '       \n' +
 '           Trigger\n' +
-"                    On complete invoke 'http://127.0.0.1:3001/connecare' method post\n" +
-"                    On complete invoke 'https://server1.com/api2' method Post with failureMessage 'Cannot complete the completion of data creation!'\n" +
+"               On complete invoke 'http://127.0.0.1:3001/connecare' method post\n" +
+"               On complete invoke 'https://server1.com/api2' method Post with failureMessage 'Cannot complete the completion of data creation!'\n" +
 '\n' +
     '\n' +
 '    Stage Evaluation\n' +

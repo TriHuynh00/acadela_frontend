@@ -68,12 +68,20 @@ class GraphElemTemplate {
                 new go.Binding("fill").makeTwoWay(),
                 {scale: 3}
             ),  // this is an arrowhead
-            $(go.TextBlock,                        // this is a Link label
+            // $(go.TextBlock,                        // this is a Link label
+            //     new go.Binding("text", "condText"),
+            //     {
+            //         stroke: GRAPH_COLOR_CODE.CONDITION,
+            //         segmentOffset: new go.Point(0, -30),
+            //         segmentOrientation: go.Link.OrientUpright,
+            //     }
+            // )
+            $(go.TextBlock,
                 new go.Binding("text", "condText"),
                 {
-                    stroke: GRAPH_COLOR_CODE.CONDITION,
-                    segmentOffset: new go.Point(0, -30),
-                    segmentOrientation: go.Link.OrientUpright,
+                    segmentIndex: -1,
+                    segmentOffset: new go.Point(-70, NaN),
+                    segmentOrientation: go.Link.OrientUpright
                 }
             )
         );

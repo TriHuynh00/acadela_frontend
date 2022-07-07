@@ -62,12 +62,14 @@ function createStageNode(stage, index) {
                         to: stage.$.id,
                         toArrow: "Diamond",
                         fill: "yellow",
+                        condText: "from " + rootElement
                         // condText: condExpression
                     };
                     // Repeated stage has a diamond from bottom to left
                     if (rootElement == stage.$.id) {
                         linkNode.fromSpot = "TopLeft";
                         linkNode.toSpot = "Top";
+                        linkNode.condText = "";
                     }
 
                 } // No transition condition = set Previous Step as start Node
@@ -104,7 +106,7 @@ function createStageNode(stage, index) {
         text: stage.$.id,
         bgColor: GRAPH_COLOR_CODE.STAGE,
         textColor: "white",
-        loc: locationX + " 0",
+        // loc: locationX + " 0",
         isGroup: true,
         lineNumber: stage.$.lineNumber['0']
     };
