@@ -6,7 +6,6 @@ import GRAPH_COLOR_CODE from "../setting/graphSetting/elementColors";
 import './CpDiagram.css';
 import GraphElemTemplate from "../setting/graphSetting/graphTemplate";
 
-
 function initDiagram() {
     const $ = go.GraphObject.make;
     // set your license key here before creating the diagram: go.Diagram.licenseKey = "...";
@@ -69,6 +68,7 @@ function initDiagram() {
 function handleModelChange(changes) {
     //alert(changes);
 }
+
 function GoDiagram({nodeArray, linkArray}) {
     return (
         <div>
@@ -79,8 +79,32 @@ function GoDiagram({nodeArray, linkArray}) {
                 linkDataArray={linkArray}
                 onModelChange={handleModelChange}
             />
-
+            <div className="legend-box">
+                <div class="legend-item"
+                     style={{background: GRAPH_COLOR_CODE.STAGE}}>
+                    Stage
+                </div>
+                <div className="legend-item"
+                     style={{background: GRAPH_COLOR_CODE.TASK}}>
+                    Task
+                </div>
+                <div className="legend-item"
+                     style={{background: GRAPH_COLOR_CODE.INPUTFIELD}}>
+                    Input <br />Field
+                </div>
+                <div className="legend-item"
+                     style={{background: GRAPH_COLOR_CODE.OUTPUTFIELD}}>
+                    Output <br />Field
+                </div>
+                <div className="legend-item"
+                     style={{background: GRAPH_COLOR_CODE.EXTERNALCOMM,
+                             color: "black"}}>
+                    External<br />Request
+                </div>
+                <div id="diamond"></div>
+                <p style={{"margin-top": "25px"}}>Transition Condition</p>
+            </div>
         </div>
     );
-}
+};
 export default GoDiagram;

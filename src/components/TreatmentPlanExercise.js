@@ -41,6 +41,7 @@ export const treatmentPlanExercise = '#aca0.1\n' +
 '        Attribute BloodPressureCondition\n' +
 '            #exactlyOne #text\n' +
 "            label = 'Blood Pressure Condition'\n" +
+'\n' +
 '    Trigger\n' +
 "        On activate invoke 'http://integration-producer:8081/v1/activate'\n" +
 "        On complete invoke 'localhost:3001/connecare'\n" +
@@ -75,8 +76,8 @@ export const treatmentPlanExercise = '#aca0.1\n' +
 '                    label = "Assigned Clinician"\n' +
 '       \n' +
 '           Trigger\n' +
-"                    On complete invoke 'http://127.0.0.1:3001/connecare' method post\n" +
-"                    On complete invoke 'https://server1.com/api2' method Post with failureMessage 'Cannot complete the completion of data creation!'\n" +
+"               On complete invoke 'http://127.0.0.1:3001/connecare' method post\n" +
+"               On complete invoke 'https://server1.com/api2' method Post with failureMessage 'Cannot complete the completion of data creation!'\n" +
 '\n' +
     '\n' +
 '    Stage Evaluation\n' +
@@ -106,25 +107,25 @@ export const treatmentPlanExercise = '#aca0.1\n' +
 "                        Option 'Yes' value='1'\n" +
 '\n' +
 '            HumanTask MeasureBloodPressure\n' +
-'            #mandatory #exactlyOne\n' +
-"            label = 'Measure Blood Pressure'\n" +
-"            owner= 'Setting.Clinician'\n" +
-"            dueDateRef = 'Setting.WorkplanDueDate'\n" +
+'               #mandatory #exactlyOne\n' +
+"               label = 'Measure Blood Pressure'\n" +
+"               owner= 'Setting.Clinician'\n" +
+"               dueDateRef = 'Setting.WorkplanDueDate'\n" +
 '            \n' +
-'            Form BloodPressureForm\n' +
+'               Form BloodPressureForm\n' +
 '\n' +
-'                InputField Diastolic\n' +
-'                    #number(0-300)\n' +
-"                    label = 'Diastolic Blood pressure (mm Hg):'\n" +
-"                    uiRef = 'colors(0<green<=80<yellow<=89<red<300)'\n" +
+'                   InputField Diastolic\n' +
+'                       #number(0-300)\n' +
+"                       label = 'Diastolic Blood pressure (mm Hg):'\n" +
+"                       uiRef = 'colors(0<green<=80<yellow<=89<red<300)'\n" +
 '\n' +
 '\n' +
-'                OutputField DiastolicAnalysis\n' +
-'                    #left \n' +
-"                    label = 'Diastolic Assessment:'\n" +
-`                    expression = ' if (Diastolic < 80) then "Normal"\n` +
-'                                  else if (Diastolic <= 89) then "Elevated" \n' +
-`                                  else "High"'\n` +
+'                   OutputField DiastolicAnalysis\n' +
+'                       #left \n' +
+"                       label = 'Diastolic Assessment:'\n" +
+`                       expression = ' if (Diastolic < 80) then "Normal"\n` +
+'                                      else if (Diastolic <= 89) then "Elevated" \n' +
+`                                      else "High"'\n` +
 '                                  \n' +
 '\n' +
 '    Stage MedicalTest\n' +
@@ -144,13 +145,23 @@ export const treatmentPlanExercise = '#aca0.1\n' +
 '            Form PrescriptionForm\n' +
 '                InputField CholesterolLvl\n' +
 '                    #text #left #mandatory\n' +
-'                    label = "Blood Cholesterol Level (mm/L):" \n'
-// '\n' +
-// '    Stage Treatment\n' +
-// '        #mandatory\n' +
-// "        owner = 'Setting.Clinician'\n" +
-// "        label = 'Treatment'\n" +
-// '\n' +
-// '        Precondition\n' +
-// "            previousStep = 'Evaluation' \n" +
-// "            condition = 'Evaluation.RequestMedicalTest.CholesterolTest = 0'"
+'                    label = "Blood Cholesterol Level (mm/L):" \n' +
+'\n' +
+'    Stage Treatment\n' +
+'        #mandatory\n' +
+"        owner = 'Setting.Clinician'\n" +
+"        label = 'Treatment'\n" +
+'\n' +
+'        Precondition\n' +
+"            previousStep = 'Evaluation' \n" +
+"            condition = 'Evaluation.RequestMedicalTest.CholesterolTest = 0' \n" +
+'\n' +
+'        HumanTask RecordPatientStatus\n' +
+'            #mandatory\n' +
+"            owner = 'Setting.Nurse'\n" +
+"            label = 'Record Pre-treatment Condition:'    \n" +
+'            \n' +
+'            Form PrescriptionForm\n' +
+'                InputField PreTreatmentNote\n' +
+'                    #text #left #mandatory\n' +
+'                    label = "Pre-treatment Note:" \n'

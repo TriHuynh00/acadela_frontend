@@ -123,22 +123,22 @@ export const treatmentPlanTemplate =      '#aca0.1\n' +
 `                       expression = 'if (Systolic<120) then "Normal"\n` +
 `                            else "High"'\n` +
 '                            \n' +
-'                InputField Diastolic\n' +
-'                    #number(0-300)\n' +
-"                    label = 'Diastolic Blood pressure (mm Hg):'\n" +
-"                    uiRef = 'colors(0<green<=80<yellow<=89<red<300)'\n" +
+'                   InputField Diastolic\n' +
+'                       #number(0-300)\n' +
+"                       label = 'Diastolic Blood pressure (mm Hg):'\n" +
+"                       uiRef = 'colors(0<green<=80<yellow<=89<red<300)'\n" +
 '\n' +
-'                OutputField DiastolicAnalysis\n' +
-'                    #left \n' +
-"                    label = 'Diastolic Assessment:'\n" +
-`                    expression = ' if (Diastolic < 80) then "Normal"\n` +
+'                   OutputField DiastolicAnalysis\n' +
+'                       #left \n' +
+"                       label = 'Diastolic Assessment:'\n" +
+`                       expression = ' if (Diastolic < 80) then "Normal"\n` +
 '                                  else if (Diastolic <= 89) then "Elevated" \n' +
 `                                  else "High"'\n` +
 '                                  \n' +
-'                OutputField OverallAssessment\n' +
-'                    #left #custom\n' +
-'                    CustomFieldValue = "Setting.BloodPressureCondition"\n' +
-'                    label = \'Overall Assessment:\'\n' +
+'                   OutputField OverallAssessment\n' +
+'                       #left #custom\n' +
+'                       CustomFieldValue = "Setting.BloodPressureCondition"\n' +
+'                       label = \'Overall Assessment:\'\n' +
 '\n' +
 '    Stage MedicalTest\n' +
 '        #mandatory\n' +

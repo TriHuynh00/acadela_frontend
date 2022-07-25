@@ -145,11 +145,19 @@ function createTaskNode(task, stageId) {
             }
 
             var fieldName = field.$.path;
-            fieldName = fieldName.substring(
-                fieldName.lastIndexOf('.') + 1);
+            if (field.$.acadelaId != null) {
+                fieldName = field.$.acadelaId;
+            } else {
+                fieldName = fieldName.substring(
+                    fieldName.lastIndexOf('.') + 1);
+            }
+            if (task.$.id == "AssessCO") {
+                console.log("Assess CO Task field: ");
+                console.log(field.$.acadelaId);
+            }
 
             const fieldNode = {
-                key: field.$.path,
+                key: task.$.id + "_" + field.$.path,
                 text: fieldName,
                 color: colorCode,
                 stroke: "white",
