@@ -365,6 +365,7 @@ export default class AutoCompleteProvider {
                             '\t\/\/CustomFieldValue = \'PATH_TO_A_CASE_OBJECT\'',
                             '\tuiRef = \'INPUT_VISUALIZATION_DEFINITION\'',
                             '\texternalId = \'EXTERNAL_ID\'',
+                            '\tdefaultValue = \'DEFAULT_VALUE\'',
                             '\tdefaultValues = \'DEFAULT_VALUES\'',
                             '\t', ''
                         ].join('\n'),
