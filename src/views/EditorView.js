@@ -1,5 +1,5 @@
 import React from 'react';
-import Acadela from "../acadelaSetting/Acadela";
+import Acadela from "../setting/acadelaSetting/Acadela";
 import MonacoEditor from "react-monaco-editor";
 
 import * as monaco from "monaco-editor";
