@@ -6,7 +6,7 @@ class GraphElemTemplate {
     static constructGroupTemplate = ($) => {
         return $(go.Group, "Auto",
             new go.Binding("lineNumber").makeTwoWay(),
-            new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
+            // new go.Binding("location", "loc", go.Point.parse).makeTwoWay(go.Point.stringify),
             {
                 alignment: go.Spot.Center,
                 layout: $(go.LayeredDigraphLayout,
@@ -15,8 +15,6 @@ class GraphElemTemplate {
 
                 fromSpot: go.Spot.RightSide,
                 toSpot: go.Spot.LeftSide,
-
-
             },
             $(go.Shape, "RoundedRectangle",  // surrounds the Placeholder
                 new go.Binding("fill", "bgColor"),
@@ -37,7 +35,7 @@ class GraphElemTemplate {
                     },
 
                     new go.Binding("stroke", "textColor"),
-                    new go.Binding("text", "key")
+                    new go.Binding("text", "label")
                 ),
 
                 $(go.Placeholder,    // represents the area of all member parts,
@@ -92,11 +90,15 @@ class GraphElemTemplate {
     static constructNodeTemplate = ($) => {
         return $(go.Node, 'Auto',  // the Shape will go around the TextBlock
             new go.Binding("lineNumber").makeTwoWay(),
-            new go.Binding('location',
-                'loc',
-                go.Point.parse).makeTwoWay(go.Point.stringify),
+            // new go.Binding('location',
+            //     'loc',
+            //     go.Point.parse).makeTwoWay(go.Point.stringify),
         $(go.Shape, 'Rectangle',
-                { name: 'SHAPE', fill: 'white', strokeWidth: 0 },
+                {
+                    // name: 'SHAPE',
+                    // fill: 'white',
+                    strokeWidth: 0
+                },
                 // Shape.fill is bound to Node.data.color
                 new go.Binding('fill', 'color')),
             $(go.TextBlock,

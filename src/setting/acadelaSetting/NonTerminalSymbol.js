@@ -1,6 +1,6 @@
 
 export default class NonTerminalSymbol {
-    static OBJECT = 'obj-keywords';
+    static CPELEMENT = 'obj-keywords';
     static ATTRIBUTE = 'attr-keywords';
     static DIRECTIVE = 'state-keywords';
     static ERROR = 'error';

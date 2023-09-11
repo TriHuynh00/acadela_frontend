@@ -8,7 +8,7 @@ export default class AutoCompleteProvider {
         let keyWordlist = [];
 
         let languageKeyWords = [
-            LanguageDefinition.languageDef.objectKeyWords,
+            LanguageDefinition.languageDef.cpElementKeyWords,
             LanguageDefinition.languageDef.attrKeyWords,
             LanguageDefinition.languageDef.directiveKeyWords
         ];
@@ -78,17 +78,20 @@ export default class AutoCompleteProvider {
                 // return {suggestions: suggestions}; */
             provideCompletionItems: () => {
                 var suggestions = [
-                    // {
-                    //     label: 'simpleText',
-                    //     kind: monaco.languages.CompletionItemKind.Text,
-                    //     insertText: 'simpleText',
-                    // },
-                    // {
-                    //     label: 'testing',
-                    //     kind: monaco.languages.CompletionItemKind.Keyword,
-                    //     insertText: 'testing(${1:condition})',
-                    //     insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-                    // },
+                    {
+                        label: 'Stage (Basic)',
+                        kind: monaco.languages.CompletionItemKind.Snippet,
+                        insertText: [
+                            'Stage STAGENAME',
+                            '\tlabel = \'STAGE_LABEL\'',
+                            '\t',
+                            '\tPrecondition',
+                            '\t\tpreviousStep = \'PREVIOUS_STAGE\'',
+                            '\t',].join('\n'),
+                        insertTextRules: monaco.languages.
+                            CompletionItemInsertTextRule.InsertAsSnippet,
+                    },
+                    // Autocomplete Definitions for other CP elements
                     {
                         label: 'Import (with alias)',
                         kind: monaco.languages.CompletionItemKind.Snippet,
@@ -168,7 +171,6 @@ export default class AutoCompleteProvider {
                             '\t\tpreviousStep = \'PREVIOUS_STAGE\'',
                             '\t',].join('\n'),
                         insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-                        documentation: 'If-Else Statement',
                     },
                     {
                         label: 'Stage (Full)',

@@ -13,7 +13,7 @@ import GRAPH_COLOR_CODE from "../setting/graphSetting/elementColors";
 const errMsgNode = {
     key: 'acadelaErrNode',
     text: 'Error in code, please see the error message for more information',
-    color: 'red',
+    bgcolor: 'red',
     textColor: "white",
 };
 
@@ -139,10 +139,10 @@ class Editor extends React.Component {
 
     // Event to center the line of code in the graphclick
       window.addEventListener("graphClick",
-          function(e) {
-              console.log(`Graph click event triggered with line ${e.detail}`);
-              editor.revealLineInCenter(e.detail);
-          });
+      function(e) {
+          console.log(`Graph click event triggered with line ${e.detail}`);
+          editor.revealLineInCenter(e.detail);
+      });
   };
 
   onChange = (newValue, e) => {

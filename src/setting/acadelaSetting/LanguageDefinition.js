@@ -3,7 +3,7 @@ import NonTerminalSymbol from "./NonTerminalSymbol";
 export default class LanguageDefinition {
 
     static languageDef = {
-        objectKeyWords: [
+        cpElementKeyWords: [
             'Workspace',
             'Case',
             'Responsibilities',
@@ -43,7 +43,6 @@ export default class LanguageDefinition {
             'value',
             'additionalDescription',
             'dynamicDescriptionRef',
-            'multiplicity',
             'type',
             'externalId',
             'defaultValues',
@@ -81,7 +80,7 @@ export default class LanguageDefinition {
             'activatehumanpart',
             'activateautopart',
             'completehumanpart',
-            'completeautopart',
+            'completeauplus ttopart',
             'correcthumanpart',
             'correctautopart',
             // Color
@@ -106,7 +105,9 @@ export default class LanguageDefinition {
             'longtext',
             'boolean',
             'number',
+            'documentLink',
             'singleChoice',
+            'multipleChoice',
             'date',
             'date.after(TODAY)',
             'after',
@@ -149,7 +150,7 @@ export default class LanguageDefinition {
 
                 [/[a-z_$][\w$]*/, {
                     cases: {
-                        '@objectKeyWords': NonTerminalSymbol.OBJECT,
+                        '@cpElementKeyWords': NonTerminalSymbol.CPELEMENT,
                         '@attrKeyWords': NonTerminalSymbol.ATTRIBUTE,
                         // '@directiveKeyWords': NonTerminalSymbol.DIRECTIVE,
                         '@default': NonTerminalSymbol.DEFAULT

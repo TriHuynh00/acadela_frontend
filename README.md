@@ -1,14 +1,10 @@
-# README #
+# Acadela Frontend #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+The IDE and Visualizer of the Acadela DSL as a React Application.
 
-### What is this repository for? ###
+# Monaco Dependency
 
-* Quick summary
-
-* Version
-
-The IDE requires the following Monaco dependencies: 
+In case the IDE does not function properly, please use the below version of Monaco dependencies: 
 
 ```
 "monaco-editor": "0.27.0",
@@ -16,24 +12,20 @@ The IDE requires the following Monaco dependencies:
 "monaco-editor-webpack-plugin": "3.0.0"
 ```
 
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+For the visualizer, the following GoJS dependencies are used:
 
-### How do I get set up? ###
+```
+"gojs": "2.2.12",
+"gojs-react": "1.1.1",
+```
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+# Installation and run
 
-### Contribution guidelines ###
+npm install  
+npm start
 
-* Writing tests
-* Code review
-* Other guidelines
+# Non-local deployment of the Acadela Backend
 
-### Who do I talk to? ###
+In case the Acadela backend is not in the same machine as the frontend, the *baseUrl* to the Acadela backend in src/services/compiler/CompileService.js shall be changed accordingly.
 
-* Repo owner or admin
-* Other community or team contact
+

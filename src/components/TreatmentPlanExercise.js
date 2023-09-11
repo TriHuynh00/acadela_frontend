@@ -67,12 +67,12 @@ export const treatmentPlanExercise = '#aca0.1\n' +
 '                 \n' +
 '                InputField SelectPatient\n' +
 '                    #custom\n' +
-'                    CustomFieldValue = "Setting.CasePatient"\n' +
+'                    ElementPath = "Setting.CasePatient"\n' +
 '                    label = "Assigned Patient"\n' +
 '                    \n' +
 '                InputField SelectDoctor\n' +
 '                    #custom\n' +
-'                    CustomFieldValue = "Setting.Clinician"\n' +
+'                    ElementPath = "Setting.Clinician"\n' +
 '                    label = "Assigned Clinician"\n' +
 '       \n' +
 '           Trigger\n' +

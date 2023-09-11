@@ -48,9 +48,9 @@ function createStageNode(stage, index) {
 
                     console.log("Found 1 transition cond\n" + condExpression);
 
-                    let rootElement = removePrefix(precond.$.processDefinitionId);
+                    let fromProcess = removePrefix(precond.$.processDefinitionId);
 
-                    // If the condition is long, only accepts the first 20 chars
+                    // If the condition is long, only render the first 20 chars
                     // and 3 dots
                     if (condExpression.length > precondMaxLen) {
                         condExpression = condExpression.substring(0, precondMaxLen)
@@ -58,15 +58,15 @@ function createStageNode(stage, index) {
                     }
 
                     linkNode = {
-                        from: rootElement,
+                        from: fromProcess,
                         to: stage.$.id,
                         toArrow: "Diamond",
                         fill: "yellow",
-                        condText: "from " + rootElement
+                        condText: "from " + fromProcess
                         // condText: condExpression
                     };
                     // Repeated stage has a diamond from bottom to left
-                    if (rootElement == stage.$.id) {
+                    if (fromProcess == stage.$.id) {
                         linkNode.fromSpot = "TopLeft";
                         linkNode.toSpot = "Top";
                         linkNode.condText = "";
@@ -91,6 +91,13 @@ function createStageNode(stage, index) {
                     graphLinkArray.push(linkNode);
                 }
 
+                // Repeated stage has a diamond from bottom to left
+                if (removePrefix(previousStep) == stage.$.id) {
+                    linkNode.fromSpot = "TopLeft";
+                    linkNode.toSpot = "Top";
+                    linkNode.condText = "";
+                }
+
             });
 
         });
@@ -103,7 +110,8 @@ function createStageNode(stage, index) {
 
     const stageNode = {
         key: stage.$.id,
-        text: stage.$.id,
+        label: stage.$.id,
+        //text: stage.$.description,
         bgColor: GRAPH_COLOR_CODE.STAGE,
         textColor: "white",
         // loc: locationX + " 0",
@@ -120,8 +128,9 @@ function createTaskNode(task, stageId) {
     task.$.id = removePrefix(task.$.id);
 
     const taskNode = {
-        key: task.$.id,
-        text: task.$.description,
+        key: stageId + "_" + task.$.id,
+        label: task.$.id,
+        //text: task.$.description,
         bgColor: GRAPH_COLOR_CODE.TASK,
         textColor: "white",
         group: stageId,
@@ -151,17 +160,13 @@ function createTaskNode(task, stageId) {
                 fieldName = fieldName.substring(
                     fieldName.lastIndexOf('.') + 1);
             }
-            if (task.$.id == "AssessCO") {
-                console.log("Assess CO Task field: ");
-                console.log(field.$.acadelaId);
-            }
 
             const fieldNode = {
-                key: task.$.id + "_" + field.$.path,
+                key:  `${stageId}_${task.$.id}_${field.$.path}`,
                 text: fieldName,
                 color: colorCode,
                 stroke: "white",
-                group: task.$.id,
+                group: stageId + "_" + task.$.id,
                 lineNumber: field.$.lineNumber['0']
             };
 
@@ -178,11 +183,11 @@ function createTaskNode(task, stageId) {
                 (hook.$.url);
 
             const hookNode = {
-                key: `${task.$.id}_${hook.$.url}`,
+                key: `${stageId}_${task.$.id}_${hook.$.url}_${hook.$.method}`,
                 text: `On ${hook.$.on}\n
                        Call ${shortenedUrl}`,
                 color: GRAPH_COLOR_CODE.EXTERNALCOMM,
-                group: task.$.id,
+                group: stageId + "_" + task.$.id,
                 lineNumber: hook.$.lineNumber['0']
             };
 
